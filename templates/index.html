@@ -30,7 +30,7 @@
 <body>
     <div class="container">
         <h1 class="text-center mb-4">Grace AI - Mission 1611</h1>
-        <p class="text-center">Ask a Bible-based question and receive a doctrinal response!</p>
+        <p class="text-center">Ask a question and receive doctrinally sound answers!</p>
         <form id="askForm" class="mt-4">
             <div class="mb-3">
                 <label for="question" class="form-label">Your Question</label>
@@ -56,7 +56,7 @@
             const responseBox = document.getElementById("response");
             const responseText = document.getElementById("responseText");
 
-            responseBox.classList.add("d-none"); // Hide response box before fetching
+            responseBox.classList.add("d-none");
 
             try {
                 const res = await fetch("/ask", {
