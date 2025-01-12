@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grace AI - Mission 1611</title>
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5/5hb7ieH8HE/d/C+Ylhv8MeHQLvLb3/A5iPYhLE"
+        crossorigin="anonymous"
+    >
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .response-box {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mb-4">Grace AI - Mission 1611</h1>
+        <p class="text-center">Ask a Bible-based question and receive a doctrinal response!</p>
+        <form id="askForm" class="mt-4">
+            <div class="mb-3">
+                <label for="question" class="form-label">Your Question</label>
+                <input
+                    type="text"
+                    id="question"
+                    class="form-control"
+                    placeholder="E.g., How does a person get saved?"
+                    required
+                />
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Ask Grace</button>
+        </form>
+        <div id="response" class="response-box d-none">
+            <h5>Response:</h5>
+            <p id="responseText"></p>
+        </div>
+    </div>
+    <script>
+        document.getElementById("askForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const question = document.getElementById("question").value;
+            const responseBox = document.getElementById("response");
+            const responseText = document.getElementById("responseText");
+
+            responseBox.classList.add("d-none"); // Hide response box before fetching
+
+            try {
+                const res = await fetch("/ask", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ question }),
+                });
+                const data = await res.json();
+                responseText.textContent = data.response || "No response received.";
+                responseBox.classList.remove("d-none");
+            } catch (error) {
+                responseText.textContent = "An error occurred. Please try again.";
+                responseBox.classList.remove("d-none");
+            }
+        });
+    </script>
+</body>
+</html>
+
